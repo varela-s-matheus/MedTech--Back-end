@@ -1,12 +1,28 @@
 package com.br.medtech.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.Data;
+import org.hibernate.annotations.Cascade;
 
+import java.util.List;
+
+import org.hibernate.annotations.CascadeType;
+
+@Data
 @Entity
 @Table(name = "administradores")
 public class Administrator extends User {
+
+    @Cascade(CascadeType.ALL)
+    @ManyToMany
+    @JoinTable(
+            name = "administrador_consultorio",
+            joinColumns = @JoinColumn(name = "fk_administrator_id"),
+            inverseJoinColumns = @JoinColumn(name = "fk_consultorio_id")
+    )
+    private List<Clinic> clinics;
+
+    public void addClinics(Clinic clinics) {
+        this.clinics.add(clinics);
+    }
 }
-
-
-

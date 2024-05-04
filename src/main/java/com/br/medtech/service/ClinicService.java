@@ -1,7 +1,8 @@
 package com.br.medtech.service;
 
+import com.br.medtech.model.Administrator;
 import com.br.medtech.model.Clinic;
-import com.br.medtech.model.Clinic;
+import com.br.medtech.repository.AdministratorRepository;
 import com.br.medtech.repository.ClinicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,8 @@ import java.util.Optional;
 public class ClinicService {
     @Autowired
     private ClinicRepository clinicRepository;
+    @Autowired
+    private AdministratorRepository administratorRepository ;
 
     public Clinic findByName(String name) {
         return clinicRepository.findByName(name);
@@ -37,8 +40,14 @@ public class ClinicService {
         return ResponseEntity.ok(clinicRepository.findAll());
     }
 
-    public ResponseEntity<Clinic> add(Clinic clinic) {
+    public ResponseEntity<Clinic> add(Long idAdm, Clinic clinic) {
         try {
+            Optional<Administrator> adm = administratorRepository.findById(idAdm);
+            if (adm.isPresent()) {
+                adm.get().addClinics(clinic);
+            } else {
+                throw new RuntimeException();
+            }
             return ResponseEntity.ok(clinicRepository.saveAndFlush(clinic));
         } catch(RuntimeException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());

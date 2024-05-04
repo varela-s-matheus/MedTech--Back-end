@@ -1,5 +1,6 @@
 package com.br.medtech.controller;
 
+import com.br.medtech.model.Administrator;
 import com.br.medtech.model.Clinic;
 import com.br.medtech.service.ClinicService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +28,9 @@ public class ClinicController {
         return clinicService.findAllClinics();
     }
 
-    @PostMapping
-    public ResponseEntity<Clinic> add(@RequestBody Clinic clinic) {
-        return clinicService.add(clinic);
+    @PostMapping("/{idAdm}")
+    public ResponseEntity<Clinic> add(@RequestBody Clinic clinic, @PathVariable Long idAdm) {
+        return clinicService.add(idAdm, clinic);
     }
 
     @PutMapping("/{id}")

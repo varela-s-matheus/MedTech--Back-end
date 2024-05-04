@@ -1,8 +1,10 @@
 package com.br.medtech.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
 @Data
 @Entity
 @Table(name = "consultorios")
@@ -34,4 +36,7 @@ public class Clinic {
 
     private String acceptHealthInsurance;
 
+    @JsonBackReference
+    @ManyToMany(mappedBy = "clinics")
+    private List<Administrator> administrators;
 }
