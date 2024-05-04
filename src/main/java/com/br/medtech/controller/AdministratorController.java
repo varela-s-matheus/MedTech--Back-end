@@ -22,9 +22,9 @@ public class AdministratorController {
         return administratorService.findAdministratorById(id);
     }
 
-    @GetMapping
-    public ResponseEntity<List<Administrator>> findAllAdministrators() {
-        return administratorService.findAllAdministrators();
+    @GetMapping("/clinic/{clinicId}")
+    public ResponseEntity<List<Administrator>> findAllAdministratorsByClinicId(@PathVariable Long clinicId) {
+        return administratorService.findAllAdministratorsByClinicId(clinicId);
     }
 
     @PostMapping
