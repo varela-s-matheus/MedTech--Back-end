@@ -16,6 +16,18 @@ Propondo uma comunicação com o Front-end através de API Rest.
 projeto utiliza o modelo MVC(Model-View-Controller), com o foco na organização e separação de responsabilidades.
 
 ## Estruturação dos end-point:
+
+Endereço padrão que irá rodar a aplicação: http://localhost:8080.
+
+<strong>Administradores:</strong>
+```
+GET: "/administrator/:id" -> Buscar administrador por Id. 
+GET: "/administrator/clinic/:idClinic" -> Buscar administradores pelo Id da clínica.
+POST: "/administrator" -> Cadastrar administrador.
+PUT: "/administrator/:id" -> Atualizar cadastro administrador.
+DELETE: "/administrator/:id" -> Apagar administrador por Id. 
+```
+
 Em andamento...
 
 

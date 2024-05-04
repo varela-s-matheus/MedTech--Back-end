@@ -33,8 +33,8 @@ public class AdministratorService {
         }
     }
 
-    public ResponseEntity<List<Administrator>> findAllAdministrators() {
-        return ResponseEntity.ok(administratorRepository.findAll());
+    public ResponseEntity<List<Administrator>> findAllAdministratorsByClinicId(Long clinicId) {
+        return ResponseEntity.ok(administratorRepository.findAllAdministratorsByClinicId(clinicId));
     }
 
     public ResponseEntity<Administrator> add(Administrator administrator) {
