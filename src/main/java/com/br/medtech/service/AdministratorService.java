@@ -21,7 +21,7 @@ public class AdministratorService {
     @Autowired
     private AdministratorRepository administratorRepository;
 
-    public ResponseEntity<Optional<Administrator>> findAdministratorById(Long id) {
+    public ResponseEntity<Optional<Administrator>> findAdministratorById(Integer id) {
         try {
             Optional<Administrator> administrator = administratorRepository.findById(id);
 
@@ -33,7 +33,7 @@ public class AdministratorService {
         }
     }
 
-    public ResponseEntity<List<Administrator>> findAllAdministratorsByClinicId(Long clinicId) {
+    public ResponseEntity<List<Administrator>> findAllAdministratorsByClinicId(Integer clinicId) {
         return ResponseEntity.ok(administratorRepository.findAllAdministratorsByClinicId(clinicId));
     }
 
@@ -45,7 +45,7 @@ public class AdministratorService {
         }
     }
 
-    public ResponseEntity<Administrator> update(Long id, Administrator administrator) {
+    public ResponseEntity<Administrator> update(Integer id, Administrator administrator) {
         if (!administratorRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Administrador não encontrado no banco de dados.");
         }
@@ -59,7 +59,7 @@ public class AdministratorService {
         }
     }
 
-    public ResponseEntity<Administrator> delete(Long id){
+    public ResponseEntity<Administrator> delete(Integer id){
         if (!administratorRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Administrador não encontrado no banco de dados.");
         }

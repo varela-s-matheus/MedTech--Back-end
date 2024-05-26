@@ -16,7 +16,7 @@ public class PatienteService {
     @Autowired
     private PatientRepository patientRepository;
 
-    public ResponseEntity<Optional<Patient>> findPatientById(Long id) {
+    public ResponseEntity<Optional<Patient>> findPatientById(Integer id) {
         try {
             Optional<Patient> patient = patientRepository.findById(id);
 
@@ -40,7 +40,7 @@ public class PatienteService {
         }
     }
 
-    public ResponseEntity<Patient> update(Long id, Patient Patient) {
+    public ResponseEntity<Patient> update(Integer id, Patient Patient) {
         if (!patientRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente não encontrado no banco de dados.");
         }
@@ -54,7 +54,7 @@ public class PatienteService {
         }
     }
 
-    public ResponseEntity<Patient> delete(Long id){
+    public ResponseEntity<Patient> delete(Integer id){
         if (!patientRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente não encontrado no banco de dados.");
         }

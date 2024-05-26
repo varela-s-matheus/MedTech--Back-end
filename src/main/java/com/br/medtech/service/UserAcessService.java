@@ -16,7 +16,7 @@ public class UserAcessService {
     @Autowired
     private UserAcessRepository userAcessRepository;
 
-    public ResponseEntity<Optional<UserAcess>> findUserAcessById(Long id) {
+    public ResponseEntity<Optional<UserAcess>> findUserAcessById(Integer id) {
         try {
             Optional<UserAcess> userAcess = userAcessRepository.findById(id);
 
@@ -24,8 +24,12 @@ public class UserAcessService {
                 return ResponseEntity.ok(userAcess);
             } throw new RuntimeException();
         } catch(RuntimeException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente não encontrado no banco de dados. " + e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado no banco de dados. " + e);
         }
+    }
+
+    public ResponseEntity<UserAcess> findByEmail(String email) {
+        return ResponseEntity.ok(userAcessRepository.findByEmail(email));
     }
 
     public ResponseEntity<List<UserAcess>> findAllUserAcesss() {
@@ -40,7 +44,7 @@ public class UserAcessService {
         }
     }
 
-    public ResponseEntity<UserAcess> update(Long id, UserAcess userAcess) {
+    public ResponseEntity<UserAcess> update(Integer id, UserAcess userAcess) {
         if (!userAcessRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente não encontrado no banco de dados.");
         }
@@ -54,7 +58,7 @@ public class UserAcessService {
         }
     }
 
-    public ResponseEntity<UserAcess> delete(Long id){
+    public ResponseEntity<UserAcess> delete(Integer id){
         if (!userAcessRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente não encontrado no banco de dados.");
         }

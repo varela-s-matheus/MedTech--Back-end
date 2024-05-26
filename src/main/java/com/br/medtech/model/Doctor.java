@@ -10,7 +10,9 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Table(name = "medicos")
 public class Doctor extends User {
+
     private String crm;
+
     private String specialty;
 
 }

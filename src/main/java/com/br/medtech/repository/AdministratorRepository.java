@@ -9,11 +9,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AdministratorRepository extends JpaRepository<Administrator, Long> {
+public interface AdministratorRepository extends JpaRepository<Administrator, Integer> {
 
     @Query(value = "SELECT a.* " +
             "FROM administrador_consultorio ac " +
             "RIGHT JOIN administradores a ON ac.fk_administrator_id = a.id " +
             "WHERE ac.fk_consultorio_id = :clinicId", nativeQuery = true)
-    public List<Administrator> findAllAdministratorsByClinicId(Long clinicId);
+    public List<Administrator> findAllAdministratorsByClinicId(Integer clinicId);
 }

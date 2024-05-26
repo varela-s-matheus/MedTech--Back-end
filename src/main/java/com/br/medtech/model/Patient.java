@@ -1,6 +1,8 @@
 package com.br.medtech.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,6 +13,7 @@ import lombok.EqualsAndHashCode;
 @Table(name = "pacientes")
 public class Patient extends User {
 
-    private String healthInsurance;
+    @Enumerated(EnumType.STRING)
+    private HealthInsurance healthInsurance;
 
 }
