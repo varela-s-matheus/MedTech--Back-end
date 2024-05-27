@@ -2,8 +2,10 @@ package com.br.medtech.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -11,6 +13,7 @@ import lombok.EqualsAndHashCode;
 @Table(name = "pacientes")
 public class Patient extends User {
 
-    private String healthInsurance;
+    private HealthInsurance healthInsurance;
+
 
 }

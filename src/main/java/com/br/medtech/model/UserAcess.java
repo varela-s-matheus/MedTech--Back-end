@@ -12,9 +12,14 @@ public class UserAcess {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String password;
-    private String userAcess;
-    private String userType;
-    private Long userId;
+    private String email;
+    private char userType;
+    private Long registerId;
 
-
+    public UserAcess(Long registerId, String email, String password, char userType) {
+        this.password = password;
+        this.email = email;
+        this.userType = userType;
+        this.registerId = registerId;
+    }
 }
