@@ -1,5 +1,6 @@
 package com.br.medtech.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -12,11 +13,13 @@ public abstract class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Integer id;
 
     private String name;
 
     private String cpf;
+
+    private String email;
 
     private Date birthDay;
 
@@ -36,7 +39,8 @@ public abstract class User {
     @Transient
     private String email;
 
-
-    // Methods ---------------------------
+    @JsonBackReference
+    @Transient
+    private String password;
 
 }

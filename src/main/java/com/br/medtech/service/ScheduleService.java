@@ -1,7 +1,7 @@
 package com.br.medtech.service;
 
-import com.br.medtech.model.Consultation;
-import com.br.medtech.repository.ConsultationRepository;
+import com.br.medtech.model.Schedule;
+import com.br.medtech.repository.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,56 +12,56 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ConsultationService {
+public class ScheduleService {
 
     @Autowired
-    private ConsultationRepository consultationRepository;
+    private ScheduleRepository scheduleRepository;
 
-    public ResponseEntity<Optional<Consultation>> findConsultationById(Long id) {
+    public ResponseEntity<Optional<Schedule>> findScheduleById(Integer id) {
         try {
-            Optional<Consultation> consultation = consultationRepository.findById(id);
+            Optional<Schedule> Schedule = scheduleRepository.findById(id);
 
-            if (consultation.isPresent()) {
-                return ResponseEntity.ok(consultation);
+            if (Schedule.isPresent()) {
+                return ResponseEntity.ok(Schedule);
             } throw new RuntimeException();
         } catch(RuntimeException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Consulta não encontrado no banco de dados. " + e);
         }
     }
 
-    public ResponseEntity<List<Consultation>> findAllConsultations() {
-        return ResponseEntity.ok(consultationRepository.findAll());
+    public ResponseEntity<List<Schedule>> findAllSchedules() {
+        return ResponseEntity.ok(scheduleRepository.findAll());
     }
 
-    public ResponseEntity<Consultation> add(Consultation consultation) {
+    public ResponseEntity<Schedule> add(Schedule schedule) {
         try {
-            return ResponseEntity.ok(consultationRepository.saveAndFlush(consultation));
+            return ResponseEntity.ok(scheduleRepository.saveAndFlush(schedule));
         } catch(RuntimeException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
-    public ResponseEntity<Consultation> update(Long id, Consultation consultation) {
-        if (!consultationRepository.existsById(id)) {
+    public ResponseEntity<Schedule> update(Integer id, Schedule schedule) {
+        if (!scheduleRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Consulta não encontrado no banco de dados.");
         }
-        consultation.setId(id);
+        schedule.setId(id);
 
         try {
-            final Consultation updateConsultation = consultationRepository.save(consultation);
-            return ResponseEntity.ok(updateConsultation);
+            final Schedule updateSchedule = scheduleRepository.save(schedule);
+            return ResponseEntity.ok(updateSchedule);
         } catch(RuntimeException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
-    public ResponseEntity<Consultation> delete(Long id){
-        if (!consultationRepository.existsById(id)) {
+    public ResponseEntity<Schedule> delete(Integer id){
+        if (!scheduleRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Consulta não encontrado no banco de dados.");
         }
 
         try {
-            consultationRepository.deleteById(id);
+            scheduleRepository.deleteById(id);
             return ResponseEntity.ok().build();
         } catch(RuntimeException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());

@@ -2,6 +2,7 @@ package com.br.medtech.controller;
 
 import com.br.medtech.model.Patient;
 import com.br.medtech.service.PatienteService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,12 +13,13 @@ import java.util.Optional;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/patient")
+@SecurityRequirement(name = "bearer-key")
 public class PacientController {
     @Autowired
     private PatienteService patientService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Patient>> findPatientById(@PathVariable Long id) {
+    public ResponseEntity<Optional<Patient>> findPatientById(@PathVariable Integer id) {
         return patientService.findPatientById(id);
     }
 
@@ -32,12 +34,12 @@ public class PacientController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Patient> update(@PathVariable Long id, @RequestBody Patient patient) {
+    public ResponseEntity<Patient> update(@PathVariable Integer id, @RequestBody Patient patient) {
         return patientService.update(id, patient);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Patient> delete(@PathVariable Long id) {
+    public ResponseEntity<Patient> delete(@PathVariable Integer id) {
         return patientService.delete(id);
     }
 
