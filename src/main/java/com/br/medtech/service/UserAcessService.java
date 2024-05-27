@@ -31,9 +31,9 @@ public class UserAcessService {
     public ResponseEntity<List<UserAcess>> findAllUserAcesss() {
         return ResponseEntity.ok(userAcessRepository.findAll());
     }
-
-    public ResponseEntity<UserAcess> add(UserAcess userAcess) {
+    public ResponseEntity<UserAcess> add(long id, String email, String password, char typeUser) {
         try {
+            UserAcess userAcess = new UserAcess(id, email, password, typeUser);
             return ResponseEntity.ok(userAcessRepository.saveAndFlush(userAcess));
         } catch(RuntimeException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
@@ -66,6 +66,5 @@ public class UserAcessService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
-
 
 }
