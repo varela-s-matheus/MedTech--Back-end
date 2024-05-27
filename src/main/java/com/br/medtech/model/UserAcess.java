@@ -20,10 +20,10 @@ public class UserAcess implements UserDetails {
     private Integer id;
     private String password;
     private String userType;
-    private Long registerId;
+    private Integer registerId;
     private String email;
 
-
+  
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_USER"));
@@ -52,5 +52,13 @@ public class UserAcess implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+
+      
+      
+    public UserAcess(Integer registerId, String email, String password, char userType) {
+        this.password = password;
+        this.email = email;
+        this.userType = userType;
+        this.registerId = registerId;
     }
 }

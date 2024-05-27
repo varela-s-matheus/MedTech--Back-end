@@ -1,5 +1,6 @@
 package com.br.medtech.service;
 
+import com.br.medtech.model.Doctor;
 import com.br.medtech.model.Patient;
 import com.br.medtech.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import java.util.Optional;
 public class PatienteService {
     @Autowired
     private PatientRepository patientRepository;
+    @Autowired
+    private UserAcessService userAcessService;
 
     public ResponseEntity<Optional<Patient>> findPatientById(Integer id) {
         try {
@@ -32,9 +35,11 @@ public class PatienteService {
         return ResponseEntity.ok(patientRepository.findAll());
     }
 
-    public ResponseEntity<Patient> add(Patient Patient) {
+    public ResponseEntity<Patient> add(Patient patient) {
         try {
-            return ResponseEntity.ok(patientRepository.saveAndFlush(Patient));
+            Patient savedPatient = patientRepository.saveAndFlush(patient);
+            userAcessService.add(patient.getId(), patient.getEmail(), patient.getPassword(), 'p');
+            return ResponseEntity.ok(patientRepository.saveAndFlush(patient));
         } catch(RuntimeException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }

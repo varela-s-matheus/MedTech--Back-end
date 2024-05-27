@@ -34,6 +34,10 @@ public abstract class User {
     private String neighborhood;
 
     private String city;
+    @Transient
+    private String password;
+    @Transient
+    private String email;
 
     @JsonBackReference
     @Transient
