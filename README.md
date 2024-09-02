@@ -12,7 +12,7 @@ Este projeto utiliza a linguagem de programação JAVA com framework SpringBoot 
 Propondo uma comunicação com o Front-end através de API Rest. 
 
 
-## Padrão MCV
+## Padrão MVC
 projeto utiliza o modelo MVC(Model-View-Controller), com o foco na organização e separação de responsabilidades.
 
 ## Estruturação dos end-point:
