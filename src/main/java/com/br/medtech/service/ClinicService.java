@@ -24,7 +24,7 @@ public class ClinicService {
         return clinicRepository.findByName(name);
     }
 
-    public ResponseEntity<Optional<Clinic>> findClinicById(Long id) {
+    public ResponseEntity<Optional<Clinic>> findClinicById(Integer id) {
         try {
             Optional<Clinic> clinic = clinicRepository.findById(id);
 
@@ -40,7 +40,7 @@ public class ClinicService {
         return ResponseEntity.ok(clinicRepository.findAll());
     }
 
-    public ResponseEntity<Clinic> add(Long idAdm, Clinic clinic) {
+    public ResponseEntity<Clinic> add(Integer idAdm, Clinic clinic) {
         try {
             Optional<Administrator> adm = administratorRepository.findById(idAdm);
             if (adm.isPresent()) {
@@ -54,7 +54,7 @@ public class ClinicService {
         }
     }
 
-    public ResponseEntity<Clinic> update(Long id, Clinic clinic) {
+    public ResponseEntity<Clinic> update(Integer id, Clinic clinic) {
         if (!clinicRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Médico não encontrado no banco de dados.");
         }
@@ -68,7 +68,7 @@ public class ClinicService {
         }
     }
 
-    public ResponseEntity<Clinic> delete(Long id){
+    public ResponseEntity<Clinic> delete(Integer id){
         if (!clinicRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Médico não encontrado no banco de dados.");
         }

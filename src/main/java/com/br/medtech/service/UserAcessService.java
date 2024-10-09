@@ -13,34 +13,38 @@ import java.util.Optional;
 
 @Service
 public class UserAcessService {
+
     @Autowired
     private UserAcessRepository userAcessRepository;
 
-    public ResponseEntity<Optional<UserAcess>> findUserAcessById(Long id) {
+    public ResponseEntity<Optional<UserAcess>> findUserAcessById(int id) {
         try {
             Optional<UserAcess> userAcess = userAcessRepository.findById(id);
-
             if (userAcess.isPresent()) {
                 return ResponseEntity.ok(userAcess);
             } throw new RuntimeException();
         } catch(RuntimeException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente não encontrado no banco de dados. " + e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado no banco de dados. " + e);
         }
+    }
+
+    public ResponseEntity<UserAcess> findByEmail(String email) {
+        return ResponseEntity.ok(userAcessRepository.findByEmail(email));
     }
 
     public ResponseEntity<List<UserAcess>> findAllUserAcesss() {
         return ResponseEntity.ok(userAcessRepository.findAll());
     }
-    public ResponseEntity<UserAcess> add(long id, String email, String password, char typeUser) {
+
+    public ResponseEntity<UserAcess> add(UserAcess userAcess) {
         try {
-            UserAcess userAcess = new UserAcess(id, email, password, typeUser);
             return ResponseEntity.ok(userAcessRepository.saveAndFlush(userAcess));
         } catch(RuntimeException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
-    public ResponseEntity<UserAcess> update(Long id, UserAcess userAcess) {
+    public ResponseEntity<UserAcess> update(int id, UserAcess userAcess) {
         if (!userAcessRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente não encontrado no banco de dados.");
         }
@@ -54,9 +58,9 @@ public class UserAcessService {
         }
     }
 
-    public ResponseEntity<UserAcess> delete(Long id){
+    public ResponseEntity<UserAcess> delete(int id){
         if (!userAcessRepository.existsById(id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente não encontrado no banco de dados.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado!");
         }
 
         try {

@@ -1,6 +1,7 @@
 package com.br.medtech.service;
 
 import com.br.medtech.model.Administrator;
+import com.br.medtech.model.UserAcess;
 import com.br.medtech.repository.AdministratorRepository;
 import com.br.medtech.repository.ClinicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,11 @@ public class AdministratorService {
 
     @Autowired
     private AdministratorRepository administratorRepository;
+    
+    @Autowired
+    private UserAcessService userAcessService;
 
-    public ResponseEntity<Optional<Administrator>> findAdministratorById(Long id) {
+    public ResponseEntity<Optional<Administrator>> findAdministratorById(Integer id) {
         try {
             Optional<Administrator> administrator = administratorRepository.findById(id);
 
@@ -33,19 +37,22 @@ public class AdministratorService {
         }
     }
 
-    public ResponseEntity<List<Administrator>> findAllAdministratorsByClinicId(Long clinicId) {
+    public ResponseEntity<List<Administrator>> findAllAdministratorsByClinicId(Integer clinicId) {
         return ResponseEntity.ok(administratorRepository.findAllAdministratorsByClinicId(clinicId));
     }
 
     public ResponseEntity<Administrator> add(Administrator administrator) {
         try {
+            userAcessService.add(new UserAcess(administrator.getId(), administrator.getEmail(),
+                    administrator.getPassword(), administrator.getUserType()));
+
             return ResponseEntity.ok(administratorRepository.saveAndFlush(administrator));
         } catch(RuntimeException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
-    public ResponseEntity<Administrator> update(Long id, Administrator administrator) {
+    public ResponseEntity<Administrator> update(Integer id, Administrator administrator) {
         if (!administratorRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Administrador não encontrado no banco de dados.");
         }
@@ -59,7 +66,7 @@ public class AdministratorService {
         }
     }
 
-    public ResponseEntity<Administrator> delete(Long id){
+    public ResponseEntity<Administrator> delete(Integer id){
         if (!administratorRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Administrador não encontrado no banco de dados.");
         }

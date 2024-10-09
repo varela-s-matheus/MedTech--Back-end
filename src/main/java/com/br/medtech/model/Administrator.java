@@ -2,15 +2,15 @@ package com.br.medtech.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
 
 import java.util.List;
 
 import org.hibernate.annotations.CascadeType;
+
+
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
@@ -30,4 +30,7 @@ public class Administrator extends User {
     public void addClinics(Clinic clinics) {
         this.clinics.add(clinics);
     }
+
+    @Transient
+    private final char userType = 'a';
 }

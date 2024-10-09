@@ -1,6 +1,7 @@
 package com.br.medtech.service;
 
 import com.br.medtech.model.Doctor;
+import com.br.medtech.model.UserAcess;
 import com.br.medtech.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ public class DoctorService {
     @Autowired
     private UserAcessService userAcessService ;
 
-    public ResponseEntity<Optional<Doctor>> findDoctorById(Long id) {
+    public ResponseEntity<Optional<Doctor>> findDoctorById(Integer id) {
         try {
             Optional<Doctor> doctor = doctorRepository.findById(id);
 
@@ -39,14 +40,14 @@ public class DoctorService {
     public ResponseEntity<Doctor> add(Doctor doctor) {
         try {
             Doctor savedDoctor = doctorRepository.saveAndFlush(doctor);
-            userAcessService.add(doctor.getId(), doctor.getEmail(), doctor.getPassword(), 'd');
+            userAcessService.add(new UserAcess(doctor.getId(), doctor.getEmail(), doctor.getPassword(), doctor.getUserType()));
             return ResponseEntity.ok(savedDoctor);
         } catch(RuntimeException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
-    public ResponseEntity<Doctor> update(Long id, Doctor doctor) {
+    public ResponseEntity<Doctor> update(Integer id, Doctor doctor) {
         if (!doctorRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Médico não encontrado no banco de dados.");
         }
@@ -60,7 +61,7 @@ public class DoctorService {
         }
     }
 
-    public ResponseEntity<Doctor> delete(Long id){
+    public ResponseEntity<Doctor> delete(Integer id){
         if (!doctorRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Médico não encontrado no banco de dados.");
         }

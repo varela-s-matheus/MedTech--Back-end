@@ -1,5 +1,6 @@
 package com.br.medtech.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -12,7 +13,7 @@ public abstract class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
 
     private String name;
 
@@ -31,12 +32,11 @@ public abstract class User {
     private String neighborhood;
 
     private String city;
-    @Transient
-    private String password;
+
     @Transient
     private String email;
 
-
-    // Methods ---------------------------
-
+    @JsonBackReference
+    @Transient
+    private String password;
 }
