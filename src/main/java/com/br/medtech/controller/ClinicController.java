@@ -21,7 +21,7 @@ public class ClinicController {
     private ClinicService clinicService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Clinic>> findClinicById(@PathVariable Integer id) {
+    public ResponseEntity<Optional<Clinic>> findClinicById(@PathVariable int id) {
         return clinicService.findClinicById(id);
     }
 
@@ -31,17 +31,17 @@ public class ClinicController {
     }
 
     @PostMapping("/{idAdm}")
-    public ResponseEntity<Clinic> add(@RequestBody Clinic clinic, @PathVariable Integer idAdm) {
+    public ResponseEntity<Clinic> add(@RequestBody Clinic clinic, @PathVariable int idAdm) {
         return clinicService.add(idAdm, clinic);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Clinic> update(@PathVariable Integer id, @RequestBody Clinic clinic) {
+    public ResponseEntity<Clinic> update(@PathVariable int id, @RequestBody Clinic clinic) {
         return clinicService.update(id, clinic);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Clinic> delete(@PathVariable Integer id) {
+    public ResponseEntity<Clinic> delete(@PathVariable int id) {
         return clinicService.delete(id);
     }
 

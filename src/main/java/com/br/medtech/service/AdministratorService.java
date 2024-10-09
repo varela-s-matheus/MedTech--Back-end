@@ -1,6 +1,7 @@
 package com.br.medtech.service;
 
 import com.br.medtech.model.Administrator;
+import com.br.medtech.model.UserAcess;
 import com.br.medtech.repository.AdministratorRepository;
 import com.br.medtech.repository.ClinicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class AdministratorService {
 
     @Autowired
     private AdministratorRepository administratorRepository;
+    
+    @Autowired
+    private UserAcessService userAcessService;
 
     public ResponseEntity<Optional<Administrator>> findAdministratorById(Integer id) {
         try {
@@ -39,6 +43,9 @@ public class AdministratorService {
 
     public ResponseEntity<Administrator> add(Administrator administrator) {
         try {
+            userAcessService.add(new UserAcess(administrator.getId(), administrator.getEmail(),
+                    administrator.getPassword(), administrator.getUserType()));
+
             return ResponseEntity.ok(administratorRepository.saveAndFlush(administrator));
         } catch(RuntimeException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());

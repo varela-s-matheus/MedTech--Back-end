@@ -22,12 +22,12 @@ public class AdministratorController {
     private AdministratorService administratorService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Administrator>> findAdministratorById(@PathVariable Integer id) {
+    public ResponseEntity<Optional<Administrator>> findAdministratorById(@PathVariable int id) {
         return administratorService.findAdministratorById(id);
     }
 
     @GetMapping("/clinic/{clinicId}")
-    public ResponseEntity<List<Administrator>> findAllAdministratorsByClinicId(@PathVariable Integer clinicId) {
+    public ResponseEntity<List<Administrator>> findAllAdministratorsByClinicId(@PathVariable int clinicId) {
         return administratorService.findAllAdministratorsByClinicId(clinicId);
     }
 
@@ -37,13 +37,13 @@ public class AdministratorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Administrator> update(@PathVariable Integer id, @RequestBody @Valid Administrator administrator) {
+    public ResponseEntity<Administrator> update(@PathVariable int id, @RequestBody @Valid Administrator administrator) {
 
         return administratorService.update(id, administrator);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Administrator> delete(@PathVariable Integer id) {
+    public ResponseEntity<Administrator> delete(@PathVariable int id) {
         return administratorService.delete(id);
     }
 

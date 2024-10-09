@@ -30,4 +30,7 @@ public class Administrator extends User {
     public void addClinics(Clinic clinics) {
         this.clinics.add(clinics);
     }
+
+    @Transient
+    private final char userType = 'a';
 }

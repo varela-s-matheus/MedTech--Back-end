@@ -19,7 +19,7 @@ public class DoctorController {
     private DoctorService doctorService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Doctor>> findDoctorById(@PathVariable Integer id) {
+    public ResponseEntity<Optional<Doctor>> findDoctorById(@PathVariable int id) {
         return doctorService.findDoctorById(id);
     }
 
@@ -34,12 +34,12 @@ public class DoctorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Doctor> update(@PathVariable Integer id, @RequestBody Doctor doctor) {
+    public ResponseEntity<Doctor> update(@PathVariable int id, @RequestBody Doctor doctor) {
         return doctorService.update(id, doctor);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Doctor> delete(@PathVariable Integer id) {
+    public ResponseEntity<Doctor> delete(@PathVariable int id) {
         return doctorService.delete(id);
     }
 

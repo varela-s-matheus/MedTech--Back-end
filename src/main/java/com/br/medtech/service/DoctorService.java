@@ -1,6 +1,7 @@
 package com.br.medtech.service;
 
 import com.br.medtech.model.Doctor;
+import com.br.medtech.model.UserAcess;
 import com.br.medtech.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,7 +40,7 @@ public class DoctorService {
     public ResponseEntity<Doctor> add(Doctor doctor) {
         try {
             Doctor savedDoctor = doctorRepository.saveAndFlush(doctor);
-            userAcessService.add(doctor.getId(), doctor.getEmail(), doctor.getPassword(), 'd');
+            userAcessService.add(new UserAcess(doctor.getId(), doctor.getEmail(), doctor.getPassword(), doctor.getUserType()));
             return ResponseEntity.ok(savedDoctor);
         } catch(RuntimeException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());

@@ -19,7 +19,7 @@ public class UserAcess implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String password;
-    private String userType;
+    private char userType;
     private Integer registerId;
     private String email;
 
@@ -52,9 +52,8 @@ public class UserAcess implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
 
-      
-      
     public UserAcess(Integer registerId, String email, String password, char userType) {
         this.password = password;
         this.email = email;

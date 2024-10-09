@@ -20,7 +20,7 @@ public class ScheduleController {
     private ScheduleService scheduleService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Schedule>> findScheduleById(@PathVariable Integer id) {
+    public ResponseEntity<Optional<Schedule>> findScheduleById(@PathVariable int id) {
         return scheduleService.findScheduleById(id);
     }
 
@@ -35,12 +35,12 @@ public class ScheduleController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Schedule> update(@PathVariable Integer id, @RequestBody Schedule Schedule) {
+    public ResponseEntity<Schedule> update(@PathVariable int id, @RequestBody Schedule Schedule) {
         return scheduleService.update(id, Schedule);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Schedule> delete(@PathVariable Integer id) {
+    public ResponseEntity<Schedule> delete(@PathVariable int id) {
         return scheduleService.delete(id);
     }
 }

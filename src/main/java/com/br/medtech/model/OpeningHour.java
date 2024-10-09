@@ -10,7 +10,7 @@ import java.time.LocalTime;
 public class OpeningHour {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
     private LocalTime firstPeriodStart;
     private LocalTime firstPeriodEnd;
     private LocalTime secondPeriodStart;

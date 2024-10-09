@@ -13,13 +13,11 @@ public abstract class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     private String name;
 
     private String cpf;
-
-    private String email;
 
     private Date birthDay;
 
@@ -34,13 +32,11 @@ public abstract class User {
     private String neighborhood;
 
     private String city;
-    @Transient
-    private String password;
+
     @Transient
     private String email;
 
     @JsonBackReference
     @Transient
     private String password;
-
 }
