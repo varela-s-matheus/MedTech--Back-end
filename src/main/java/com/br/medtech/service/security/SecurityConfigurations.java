@@ -30,7 +30,7 @@ public class SecurityConfigurations {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(req -> {
-                    req.requestMatchers(HttpMethod.POST, "/login", "/patient", "/doctor", "/administrator").permitAll();
+                    req.requestMatchers(HttpMethod.POST, "/login", "/patient", "/doctor", "/administrator", "/error").permitAll();
                     req.requestMatchers("/swagger-ui.html", "/swagger-ui/**").permitAll();
                     req.anyRequest().authenticated();
                 })
