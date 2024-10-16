@@ -1,6 +1,7 @@
 package com.br.medtech.service;
 
 import com.br.medtech.model.Doctor;
+import com.br.medtech.model.Patient;
 import com.br.medtech.model.UserAcess;
 import com.br.medtech.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +40,13 @@ public class DoctorService {
 
     public ResponseEntity<Doctor> add(Doctor doctor) {
         try {
-            Doctor savedDoctor = doctorRepository.saveAndFlush(doctor);
-            userAcessService.add(new UserAcess(doctor.getId(), doctor.getEmail(), doctor.getPassword(), doctor.getUserType()));
-            return ResponseEntity.ok(savedDoctor);
+            if(!doctorRepository.existsByCpf(doctor.getCpf()) && !userAcessService.existsByEmail(doctor.getEmail())) {
+                Doctor savedDoctor = doctorRepository.saveAndFlush(doctor);
+                userAcessService.add(new UserAcess(doctor.getId(), doctor.getEmail(), doctor.getPassword(), doctor.getUserType()));
+                return ResponseEntity.ok(savedDoctor);
+            }
+            throw new RuntimeException("Usuário já cadastrado!");
+
         } catch(RuntimeException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }

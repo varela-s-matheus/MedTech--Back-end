@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DoctorRepository extends JpaRepository<Doctor, Integer> {
+
+    boolean existsByCpf(String cpf);
 }

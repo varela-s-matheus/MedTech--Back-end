@@ -1,5 +1,6 @@
 package com.br.medtech.service.security;
 
+import com.br.medtech.repository.UserAcessRepository;
 import com.br.medtech.service.UserAcessService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -20,7 +21,7 @@ public class SecurityFilter extends OncePerRequestFilter {
     private TokenService tokenService;
 
     @Autowired
-    private UserAcessService userAcessService;
+    private UserAcessRepository userAcessRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -28,26 +29,19 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         if (tokenJWT != null) {
             var subject = tokenService.getSubject(tokenJWT);
-            var userAuthentication = userAcessService.findByEmail(subject);
-
-            var authentication = new UsernamePasswordAuthenticationToken(userAuthentication, null, userAuthentication.getBody().getAuthorities());
+            var userAuthentication = userAcessRepository.findByEmail(subject).get();
+            var authentication = new UsernamePasswordAuthenticationToken(userAuthentication, null, userAuthentication.getAuthorities());
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
-
         }
-
         filterChain.doFilter(request, response);
     }
 
     public String recoveryToken(HttpServletRequest request) {
         var authorizationHeader = request.getHeader("Authorization");
-        if (authorizationHeader != null ) {
-            return authorizationHeader;
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            return authorizationHeader.substring(7); // Extract the token part
         }
-
         return null;
-
     }
-
-
 }

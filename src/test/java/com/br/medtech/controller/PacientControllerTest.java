@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureJsonTesters
-class PacientControllerTest {
+class   PacientControllerTest {
 
     @Autowired
     private MockMvc mvc;

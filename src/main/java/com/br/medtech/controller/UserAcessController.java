@@ -22,10 +22,22 @@ public class UserAcessController {
     @Autowired
     private TokenService tokenService;
 
+//    @PostMapping
+//    public ResponseEntity login(@RequestBody @Valid UserAcess userAcess) {
+//        var token = new UsernamePasswordAuthenticationToken(userAcess.getEmail(), userAcess.getPassword());
+//        var authentication = manager.authenticate(token);
+//
+//        return ResponseEntity.ok(tokenService.generateToken((UserAcess) authentication.getPrincipal()));
+//    }
+
     @PostMapping
     public ResponseEntity login(@RequestBody @Valid UserAcess userAcess) {
+        System.out.println("Attempting to authenticate user: " + userAcess.getEmail());
         var token = new UsernamePasswordAuthenticationToken(userAcess.getEmail(), userAcess.getPassword());
+
+        // Ensure that manager.authenticate is not causing recursive calls
         var authentication = manager.authenticate(token);
+        System.out.println("Authentication successful for user: " + userAcess.getEmail());
 
         return ResponseEntity.ok(tokenService.generateToken((UserAcess) authentication.getPrincipal()));
     }
