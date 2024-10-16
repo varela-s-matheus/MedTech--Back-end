@@ -38,9 +38,12 @@ public class PatienteService {
 
     public ResponseEntity<Patient> add(Patient patient) {
         try {
-            Patient savedPatient = patientRepository.saveAndFlush(patient);
-            userAcessService.add(new UserAcess(patient.getId(), patient.getEmail(), patient.getPassword(), patient.getUserType()));
-            return ResponseEntity.ok(patientRepository.saveAndFlush(patient));
+            if(!patientRepository.existsPatientByCpf(patient.getCpf()) && !userAcessService.existsByEmail(patient.getEmail())) {
+                Patient savedPatient = patientRepository.saveAndFlush(patient);
+                userAcessService.add(new UserAcess(patient.getId(), patient.getEmail(), patient.getPassword(), patient.getUserType()));
+                return ResponseEntity.ok(savedPatient);
+            }
+            throw new RuntimeException("Usuário já cadastrado!");
         } catch(RuntimeException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }

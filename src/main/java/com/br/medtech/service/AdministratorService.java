@@ -1,6 +1,7 @@
 package com.br.medtech.service;
 
 import com.br.medtech.model.Administrator;
+import com.br.medtech.model.Doctor;
 import com.br.medtech.model.UserAcess;
 import com.br.medtech.repository.AdministratorRepository;
 import com.br.medtech.repository.ClinicRepository;
@@ -46,7 +47,12 @@ public class AdministratorService {
             userAcessService.add(new UserAcess(administrator.getId(), administrator.getEmail(),
                     administrator.getPassword(), administrator.getUserType()));
 
-            return ResponseEntity.ok(administratorRepository.saveAndFlush(administrator));
+            if(!administratorRepository.existsByCpf(administrator.getCpf()) && !userAcessService.existsByEmail(administrator.getEmail())) {
+                Administrator savedAdministrator = administratorRepository.saveAndFlush(administrator);
+                userAcessService.add(new UserAcess(administrator.getId(), administrator.getEmail(), administrator.getPassword(), administrator.getUserType()));
+                return ResponseEntity.ok(savedAdministrator);
+            }
+            throw new RuntimeException("Usuário já cadastrado!");
         } catch(RuntimeException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }

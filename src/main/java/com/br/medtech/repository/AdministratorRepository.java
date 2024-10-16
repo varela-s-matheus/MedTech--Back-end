@@ -16,4 +16,6 @@ public interface AdministratorRepository extends JpaRepository<Administrator, In
             "RIGHT JOIN administradores a ON ac.fk_administrator_id = a.id " +
             "WHERE ac.fk_consultorio_id = :clinicId", nativeQuery = true)
     public List<Administrator> findAllAdministratorsByClinicId(Integer clinicId);
+
+    boolean existsByCpf(String cpf);
 }

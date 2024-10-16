@@ -1,6 +1,9 @@
 package com.br.medtech.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -34,9 +37,10 @@ public abstract class User {
     private String city;
 
     @Transient
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String email;
 
-    @JsonBackReference
     @Transient
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 }
